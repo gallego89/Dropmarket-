@@ -1,0 +1,20 @@
+# Render Blueprint. Precisa de plano pago (disco persistente); no plano gratuito o banco é apagado a cada reinício.
+services:
+  - type: web
+    name: dropmarket
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/status
+    disk:
+      name: dados
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@dropmarket.local
+      - key: ADMIN_PASSWORD
+        sync: false        # você digita no painel do Render
+      - key: DROPMARKET_DB
+        value: /data/dropmarket.db
